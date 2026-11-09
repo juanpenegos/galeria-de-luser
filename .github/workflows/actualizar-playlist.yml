@@ -1,0 +1,30 @@
+name: Actualizar playlist
+
+# Cada hora revisa la playlist de Spotify. Si cambió, actualiza canciones.js y la página se republica sola.
+on:
+  schedule:
+    - cron: "17 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  actualizar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Leer la playlist
+        run: node scripts/actualizar-canciones.mjs
+      - name: Guardar si hubo cambios
+        run: |
+          if [ -n "$(git status --porcelain js/datos/canciones.js)" ]; then
+            git config user.name "juan esteban penagos fetecua"
+            git config user.email "jpenagosf@unbosque.edu.co"
+            git add js/datos/canciones.js
+            git commit -m "La playlist cambió: se actualizan las canciones"
+            git push
+          fi
