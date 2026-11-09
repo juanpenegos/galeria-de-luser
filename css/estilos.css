@@ -525,3 +525,7 @@ kbd { font-family: var(--mono); font-size: .75rem; border: 1px solid var(--chip-
 /* instrucciones: teclado en computador, botones de pantalla en celular */
 .only-touch { display: none; }
 @media (pointer: coarse), (max-width: 720px) { .only-keys { display: none; } .only-touch { display: inline; } }
+
+/* si el navegador no deja sonar solo, el reproductor late para que se le dé play */
+.spdock.need { animation: spNeed 1.2s ease-in-out infinite; }
+@keyframes spNeed { 0%, 100% { box-shadow: 0 0 0 0 rgba(29,185,84,.0); } 50% { box-shadow: 0 0 0 6px rgba(29,185,84,.55); } }

@@ -36,7 +36,7 @@ function setNow(i) {
   } else {
     const s = SONGS[i];
     now.classList.add("playing"); now.classList.remove("idle");
-    $("nowLbl").textContent = (spTrack(s) && SP.ready) ? "Sonando en Spotify" : s.audio ? "Sonando" : "Sonando · ejemplo";
+    $("nowLbl").textContent = (spTrack(s) && SP.ready) ? spLabel() : s.audio ? "Sonando" : "Sonando · ejemplo";
     $("nowTtl").textContent = s.title + " — " + s.artist;
     const sh = $("sheet"), pl = pieces[i].el.querySelector(".plaque");
     sh.innerHTML = "";

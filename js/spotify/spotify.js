@@ -12,26 +12,60 @@
 /* ---------- Spotify ----------
    Cada canción con link de Spotify (open.spotify.com/track/...) suena en el
    reproductor oficial de Spotify: completa si hay sesión abierta, 30 s si no. */
-const SP = { ready: false, ctl: null, want: null, failed: false };
+const SP = { ready: false, ctl: null, want: null, loaded: null, playing: false, hint: false, failed: false, timer: null };
 function spTrack(s) {
   const m = /track[/:]([A-Za-z0-9]{22})/.exec(s.spotify || "");
   return m ? "spotify:track:" + m[1] : null;
 }
+/* Texto de la barra de abajo: "Sonando en Spotify" SOLO cuando el reproductor dice que de verdad suena. */
+function spLabel() {
+  if (muted) return "En silencio";
+  if (SP.playing) return "Sonando en Spotify";
+  if (SP.hint) return "Toca ▶ para escuchar";
+  return "Conectando con Spotify…";
+}
+function spRefreshLabel() {
+  if (active >= 0 && SP.ready && spTrack(SONGS[active])) $("nowLbl").textContent = spLabel();
+  $("spdock").classList.toggle("need", SP.hint && !SP.playing && !muted); // resalta el reproductor si hay que darle play
+}
+/* Si en ~2,5 s no empezó a sonar (el navegador bloquea el sonido sin un toque), se avisa. */
+function spWatch(uri) {
+  clearTimeout(SP.timer); SP.hint = false; spRefreshLabel();
+  SP.timer = setTimeout(() => { if (SP.want === uri && !SP.playing && !muted) { SP.hint = true; spRefreshLabel(); } }, 2500);
+}
 function spPlayer(uri) {
   return {
     start() {
-      if (muted) return;
       SP.want = uri; $("spdock").classList.add("show");
+      if (muted) { spRefreshLabel(); return; }
+      SP.loaded = uri; SP.playing = false;
       SP.ctl.loadUri(uri); // siempre empieza desde el inicio
+      try { SP.ctl.play(); } catch (e) {}
+      spWatch(uri);
     },
-    stop() { SP.want = null; try { SP.ctl.pause(); } catch (e) {} $("spdock").classList.remove("show"); },
-    setMuted(m) { if (m) { try { SP.ctl.pause(); } catch (e) {} } else this.start(); },
+    stop() {
+      clearTimeout(SP.timer); SP.want = null; SP.playing = false; SP.hint = false;
+      try { SP.ctl.pause(); } catch (e) {}
+      $("spdock").classList.remove("show", "need");
+    },
+    setMuted(m) {
+      if (m) { try { SP.ctl.pause(); } catch (e) {} SP.playing = false; clearTimeout(SP.timer); spRefreshLabel(); }
+      else if (SP.loaded === uri) { try { SP.ctl.resume(); } catch (e) {} spWatch(uri); } // retoma donde iba
+      else this.start();
+    },
   };
 }
 window.onSpotifyIframeApiReady = (API) => {
   API.createController($("spEmbed"), { uri: "spotify:playlist:0wC7mgNCP0vItU6zhKxjc6", width: "100%", height: 80 }, (ctl) => {
     SP.ctl = ctl; SP.ready = true;
-    ctl.addListener("ready", () => { if (SP.want) ctl.play(); });
+    ctl.addListener("ready", () => { if (SP.want && !muted) ctl.play(); });
+    // el reproductor avisa si suena o está en pausa: la barra de abajo solo refleja eso
+    ctl.addListener("playback_update", (e) => {
+      const d = (e && e.data) || {};
+      SP.playing = !!SP.want && !d.isPaused && !d.isBuffering;
+      if (SP.playing) { SP.hint = false; clearTimeout(SP.timer); }
+      spRefreshLabel();
+    });
     if (active >= 0) play(active);
   });
 };
