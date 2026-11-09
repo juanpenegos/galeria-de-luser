@@ -16,7 +16,7 @@ const GAP = 900;              // distancia entre cuadros (nunca suenan dos a la 
 const RANGE = 190;            // qué tan cerca hay que estar para que suene
 const SPEED = 380;            // velocidad al caminar (px por segundo)
 const LAST = FIRST + GAP * (SONGS.length - 1);
-const END = LAST + 2100;
+const END = LAST + 2800;     // la última pared (la de las fotos) empieza en LAST + 400 y llega hasta aquí
 const FRIEND_X = LAST + 760;   // el amigo y su perro esperan al final
 
 const $ = (id) => document.getElementById(id);

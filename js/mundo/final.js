@@ -12,15 +12,16 @@
 let cullT = 0;
 const cullList = [];
 
-/* ---------- fotos en la última pared (4 cuadros de distintos tamaños) ----------
+/* ---------- fotos en la última pared (6 cuadros de distintos tamaños) ----------
+   La pared de las fotos empieza en LAST + 400: ninguna foto puede ir antes (ahí está la de la última canción). dx se mide desde LAST.
    photo: pon aquí la foto de cada cuadro (vacío = imagen de ejemplo) */
 const END_PHOTOS = [
-  { photo: "img/foto-final-01.webp", frame: "pintado", dx: 350, size: 0.82, lift: 0, pos: "50% 50%" },
-  { photo: "img/foto-final-02.webp", frame: "oro2", dx: 560, size: 0.95, lift: 0.1, pos: "50% 40%" },
-  { photo: "img/foto-final-03.webp", frame: "azul", dx: 760, size: 0.78, lift: -0.08, pos: "50% 75%" },
-  { photo: "img/foto-final-04.webp", frame: "oro2", dx: 950, size: 0.8, lift: 0.06, pos: "50% 45%" },
-  { photo: "img/foto-final-05.webp", frame: "azul", dx: 1140, size: 0.9, lift: -0.02, pos: "50% 85%" },
-  { photo: "img/foto-final-06.webp", frame: "oro", dx: 1370, size: 1.05, lift: 0.1, pos: "50% 35%" },
+  { photo: "img/foto-final-01.webp", frame: "pintado", dx: 640, size: 0.82, lift: 0, pos: "50% 50%" },
+  { photo: "img/foto-final-02.webp", frame: "oro2", dx: 880, size: 0.95, lift: 0.1, pos: "50% 40%" },
+  { photo: "img/foto-final-03.webp", frame: "azul", dx: 1100, size: 0.78, lift: -0.08, pos: "50% 75%" },
+  { photo: "img/foto-final-04.webp", frame: "oro2", dx: 1330, size: 0.8, lift: 0.06, pos: "50% 45%" },
+  { photo: "img/foto-final-05.webp", frame: "azul", dx: 1570, size: 0.9, lift: -0.02, pos: "50% 85%" },
+  { photo: "img/foto-final-06.webp", frame: "oro", dx: 1850, size: 1.05, lift: 0.1, pos: "50% 35%" },
 ];
 END_PHOTOS.forEach((p, n) => {
   const fr = FRAMES[p.frame], el = document.createElement("div");
