@@ -16,22 +16,23 @@ const cullList = [];
    La pared de las fotos empieza en LAST + 400: ninguna foto puede ir antes (ahí está la de la última canción). dx se mide desde LAST.
    photo: pon aquí la foto de cada cuadro (vacío = imagen de ejemplo) */
 const END_PHOTOS = [
-  { photo: "img/foto-final-01.webp", frame: "pintado", dx: 640, size: 0.82, lift: 0, pos: "50% 50%" },
-  { photo: "img/foto-final-02.webp", frame: "oro2", dx: 880, size: 0.95, lift: 0.1, pos: "50% 40%" },
-  { photo: "img/foto-final-03.webp", frame: "azul", dx: 1100, size: 0.78, lift: -0.08, pos: "50% 75%" },
-  { photo: "img/foto-final-04.webp", frame: "oro2", dx: 1330, size: 0.8, lift: 0.06, pos: "50% 45%" },
-  { photo: "img/foto-final-05.webp", frame: "azul", dx: 1570, size: 0.9, lift: -0.02, pos: "50% 85%" },
-  { photo: "img/foto-final-06.webp", frame: "oro", dx: 1850, size: 1.05, lift: 0.1, pos: "50% 35%" },
+  { photo: "img/foto-final-01.webp", frame: "pintado",   dx: 650,  size: 1.25 },
+  { photo: "img/foto-final-02.webp", frame: "oro2",      dx: 950,  size: 1.25 },
+  { photo: "img/foto-final-03.webp", frame: "azul",      dx: 1250, size: 1.25 },
+  { photo: "img/foto-final-04.webp", frame: "pintado",   dx: 1550, size: 1.25 },
+  { photo: "img/foto-final-05.webp", frame: "azul",      dx: 1850, size: 1.25 },
+  { photo: "img/foto-final-06.webp", frame: "acuarela3", dx: 2220, size: 1.4 },   // la única horizontal
 ];
 END_PHOTOS.forEach((p, n) => {
   const fr = FRAMES[p.frame], el = document.createElement("div");
   el.className = "wallpic"; el.style.left = (LAST + p.dx) + "px";
   el.style.setProperty("--fk", (Math.min(fr.fk, 1.25, 1.15 * fr.ar) * p.size).toFixed(3));
-  el.style.setProperty("--far", fr.ar); el.style.setProperty("--lift", p.lift);
+  el.style.setProperty("--far", fr.ar); el.style.setProperty("--lift", 0); // todas a la misma altura
   ["--w0", "--w1", "--w2", "--w3"].forEach((v, k) => el.style.setProperty(v, fr.win[k]));
-  el.innerHTML = '<div class="art"><img class="pic" alt="Foto de Luisa y Alejo ' + (n + 1) + '"><img class="frame" alt=""></div>';
+  el.innerHTML = '<div class="art"><img class="pic" alt="Foto ' + (n + 1) + '"><img class="frame" alt=""></div>';
   el.querySelector(".pic").src = p.photo || samplePhoto(30 + n * 17);
-  if (p.pos) el.querySelector(".pic").style.objectPosition = p.pos;
+  // la foto se ve COMPLETA (sin recortar): "contain" con un paspartú crema, como un cuadro de verdad
+  el.querySelector(".pic").style.objectFit = "contain"; el.querySelector(".pic").style.background = "#f1eadb";
   el.querySelector(".frame").src = fr.src;
   $("pieces").appendChild(el);
   cullList.push({ el, x0: LAST + p.dx - 400, x1: LAST + p.dx + 400, on: true });
