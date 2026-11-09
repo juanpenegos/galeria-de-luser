@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Galería de (Lu)ser</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Figtree:wght@400;500;600&family=DM+Mono:wght@400;500&family=Caveat:wght@600;700&family=Gochi+Hand&family=Darumadrop+One&family=Cinzel:wght@500;700&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap">
+<link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+<div class="app" id="app">
+  <header class="top">
+    <div class="brand">Galería de (Lu)ser <small>SALA 01</small></div>
+    <div class="actions">
+      <button class="chip" id="lights" type="button">Apagar luces</button>
+      <button class="chip" id="toEnd" type="button">Ir al fondo →</button>
+    </div>
+  </header>
+
+  <div class="viewport" id="viewport">
+    <div class="sky"><div class="sky-img" id="skyDay"></div><div class="sky-img night" id="skyNight"></div><div class="sun"></div><div class="hills far" id="hillsFar"></div><div class="hills near" id="hillsNear"></div></div>
+    <div class="floor"><div class="tiles" id="tiles"></div></div>
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+      <symbol id="palm" viewBox="0 0 200 400">
+        <path d="M104 400 C100 320 92 240 108 120" fill="none" stroke="#8a5a32" stroke-width="14" stroke-linecap="round"/>
+        <path d="M104 400 C100 320 92 240 108 120" fill="none" stroke="#a8743f" stroke-width="5" stroke-dasharray="4 14"/>
+        <g fill="#2f8a3e">
+          <path d="M108 120 C70 90 30 100 4 140 C40 115 75 112 108 126 Z"/>
+          <path d="M108 120 C140 86 180 92 198 132 C165 110 135 110 108 128 Z"/>
+          <path d="M108 118 C88 70 50 52 20 60 C55 70 85 92 106 126 Z"/>
+          <path d="M108 118 C126 66 160 48 188 56 C155 70 128 94 110 126 Z"/>
+          <path d="M108 118 C104 76 112 40 126 20 C124 50 118 84 112 124 Z"/>
+        </g>
+        <g fill="#3fa650"><path d="M108 120 C80 100 50 106 30 128 C58 116 84 116 108 126 Z"/><path d="M108 120 C134 100 164 104 180 124 C155 114 130 116 108 126 Z"/></g>
+        <circle cx="102" cy="128" r="7" fill="#7a4a24"/><circle cx="114" cy="130" r="7" fill="#6a3f1f"/>
+      </symbol>
+      <symbol id="bush" viewBox="0 0 200 260">
+        <path d="M100 250 L100 150" stroke="#7a4a24" stroke-width="12" stroke-linecap="round"/>
+        <circle cx="100" cy="100" r="66" fill="#2f8a3e"/><circle cx="62" cy="120" r="44" fill="#3a9c4a"/><circle cx="140" cy="118" r="46" fill="#33914a"/><circle cx="100" cy="64" r="44" fill="#45ad57"/>
+        <g fill="#f2c14e"><circle cx="70" cy="90" r="7"/><circle cx="128" cy="76" r="7"/><circle cx="112" cy="128" r="7"/><circle cx="80" cy="140" r="6"/><circle cx="150" cy="120" r="6"/></g>
+        <path d="M58 200 L142 200 L132 260 L68 260 Z" fill="#c4532d"/><rect x="52" y="192" width="96" height="16" rx="3" fill="#a8441f"/>
+      </symbol>
+    </svg>
+    <div class="birds" id="birds"></div>
+    <div class="flies" id="flies" aria-hidden="true"></div>
+    <div class="world" id="world">
+      <div class="houses" id="houses"></div>
+      <section class="intro" id="intro">
+        <span class="eyebrow">Canciones colgadas en la pared</span>
+        <h1>Galería de (Lu)ser</h1>
+        <p>Camina con <span class="keys"><kbd>←</kbd><kbd>→</kbd></span> o <span class="keys"><kbd>A</kbd><kbd>D</kbd></span> y párate frente a un cuadro para escuchar su canción.</p>
+        <div class="spwall">
+          <button class="spbtn" id="spOpen" type="button">Iniciar sesión en Spotify</button>
+          <span class="spshort">Así las canciones suenan completas.</span>
+        </div>
+      </section>
+      <div id="pieces"></div>
+      <section class="outro" id="outro">
+        <span class="eyebrow">Fin de la sala</span>
+        <h2>Hasta aquí llega la pared</h2>
+        <p>Da la vuelta y vuelve a escuchar.</p>
+        <a class="spbtn" href="https://open.spotify.com/playlist/0wC7mgNCP0vItU6zhKxjc6" target="_blank" rel="noopener">Escuchar la playlist en Spotify</a>
+      </section>
+      <div id="flowers"></div>
+      <div class="lady helado" id="helado">
+        <div class="shadow"></div>
+        <div class="bubble" role="status">Y si un día sientes que sobras, <b>recuerda que en algún lugar del mundo siempre me harás falta.</b></div>
+        <img id="heladoImg" alt="Heladero con su carrito de helados">
+      </div>
+      <div class="lady" id="lady">
+        <div class="shadow"></div>
+        <div class="bubble" role="status">Luisa, <b>Colombia te extraña.</b> Así como tú la llevas en tu corazón, ella también te lleva en el suyo.</div>
+        <img id="ladyImg" alt="Señora con su carrito de frutas">
+      </div>
+      <div class="friend" id="friend">
+        <div class="shadow"></div>
+        <div class="bubble" role="status">Luisa, <b>¡te extrañooo mucho!</b> Te quiero volver a ver y espero que te guste la playlist 💛</div>
+        <img class="fbody" id="friendImg" alt="Amigo de pelo crespo con flores, esperando al final">
+      </div>
+      <div class="friend fdog" id="fdog">
+        <div class="shadow"></div>
+        <img class="fbody" id="fdogImg" alt="Perro pastor con gorra verde">
+      </div>
+      <div class="dog" id="dog">
+        <div class="shadow"></div>
+        <div class="dstage"><img class="dlegs" id="dlegs" alt=""><img class="dbody" id="dbody" alt="Perrito acompañante"></div>
+      </div>
+      <div class="walker" id="walker">
+        <div class="shadow"></div>
+        <div class="stage"><img class="legs" id="legs" alt=""><img class="body" id="bodyImg" alt="Personaje de la galería"></div>
+      </div>
+    </div>
+  </div>
+
+  <aside class="sheet" id="sheet" aria-live="polite"></aside>
+  <footer class="hud">
+    <div class="spmodal" id="spmodal" hidden>
+      <div class="spbox" role="dialog" aria-modal="true" aria-labelledby="spTitle">
+        <button class="spx" id="spClose" type="button" aria-label="Cerrar">✕</button>
+        <p class="sptitle" id="spTitle">¿Por qué iniciar sesión en Spotify?</p>
+        <p class="sptext">Cada cuadro de esta calle es una canción, y suenan desde Spotify. Si tienes tu sesión de Spotify abierta en este navegador, cada canción suena <b>completa</b>, de principio a fin. Si no, Spotify solo deja escuchar <b>30 segundos</b>.</p>
+        <ol class="spsteps">
+          <li>Toca <b>Ir a Spotify</b> e inicia sesión en la pestaña que se abre.</li>
+          <li>Vuelve a esta pestaña y toca <b>Ya inicié sesión</b>.</li>
+        </ol>
+        <div class="sprow">
+          <a class="spbtn" id="spGo" href="https://accounts.spotify.com/login" target="_blank" rel="noopener">Ir a Spotify</a>
+          <button class="chip" id="spReload" type="button">Ya inicié sesión</button>
+        </div>
+        <p class="spnote" id="spNote" hidden></p>
+      </div>
+    </div>
+    <div class="spdock" id="spdock"><div id="spEmbed"></div></div>
+    <div class="now idle" id="now">
+      <div class="eq" aria-hidden="true"><b></b><b></b><b></b></div>
+      <div class="txt"><span class="lbl" id="nowLbl">En silencio</span><span class="ttl" id="nowTtl">Párate frente a un cuadro</span></div>
+      <button class="chip mute" id="mute" type="button">Silenciar</button>
+    </div>
+    <div class="map" id="map" aria-label="Mapa de la sala"><div class="track"></div><div class="you" id="you"></div></div>
+    <div class="pad">
+      <button class="ctrl" id="goL" type="button" aria-label="Caminar a la izquierda">◀</button>
+      <button class="ctrl" id="goR" type="button" aria-label="Caminar a la derecha">▶</button>
+    </div>
+  </footer>
+</div>
+
+<!-- Código, en orden: datos → mundo → sonido → Spotify → juego -->
+<script src="js/datos/canciones.js"></script>
+<script src="js/datos/configuracion.js"></script>
+<script src="js/datos/recursos.js"></script>
+<script src="js/mundo/medidas.js"></script>
+<script src="js/mundo/calle.js"></script>
+<script src="js/mundo/cuadros.js"></script>
+<script src="js/audio/sonido.js"></script>
+<script src="js/spotify/spotify.js"></script>
+<script src="js/audio/reproductor.js"></script>
+<script src="js/juego/controles.js"></script>
+<script src="js/juego/pantalla.js"></script>
+<script src="js/mundo/fauna.js"></script>
+<script src="js/mundo/final.js"></script>
+<script src="js/juego/bucle.js"></script>
+</body>
+</html>
