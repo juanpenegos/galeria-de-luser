@@ -52,6 +52,14 @@ const edges = [0, 620];
 for (let i = 0; i < SONGS.length; i++) edges.push(FIRST + i * GAP + (i === SONGS.length - 1 ? 400 : GAP / 2));
 edges.push(END);
 const housesEl = $("houses");
+/* Puertas y ventanas: todas las puertas miden lo mismo y las ventanas se centran a la altura
+   del cuadro. Se colocan a la izquierda del marco, a una distancia fija de su borde (ver .lft en el CSS). */
+const DOOR_H = 600, WIN_H = 400;
+function opening(el, isDoor) {
+  el.classList.add("lft", isDoor ? "door" : "win");
+  el.style.setProperty("--h", isDoor ? DOOR_H : WIN_H);
+  el.style.removeProperty("--b"); el.style.left = "";
+}
 function fx(house, key, leftPx, heightK, bottomK) {
   const im = document.createElement("img");
   const [w, h] = FACADE_SIZE[key];
@@ -146,26 +154,31 @@ for (let h = 0; h < edges.length - 1; h++) {
   d.innerHTML = '<div class="roof"></div><div class="zocalo"></div>';
   const z = d.querySelector(".zocalo");
   const rel = FIRST + (h - 1) * GAP - edges[h];  // centro del cuadro dentro de la casa
+  if (!first && !last) {
+    const fr = FRAMES[FRAME_ORDER[(h - 1) % FRAME_ORDER.length]];
+    d.style.setProperty("--rel", rel);
+    d.style.setProperty("--fk", Math.min(fr.fk, 1.25, 1.15 * fr.ar).toFixed(3)); // mismo ancho de marco que usa cuadros.js
+  }
   const left = rel - 330;                         // zona libre a la izquierda del cuadro
   if (type === "col") {
     d.style.backgroundColor = PLASTER.col[h % 3];
     const zc = ZOCALO_COL[h % ZOCALO_COL.length];
     z.style.backgroundColor = zc; z.style.borderTop = "7px solid #1f4fbf"; z.style.height = first || last ? "9%" : "30%";
     if (!first && !last) {
-      if (h % 2) fx(d, "door1", left, 560, 0); else fx(d, "win1", left - 20, 360, 130);
+      if (h % 2) opening(fx(d, "door1", left, 560, 0), true); else opening(fx(d, "win1", left - 20, 360, 130), false);
       [rel - 70, rel + 70].forEach((fxl) => { const f = fx(d, "flw", fxl - 26, 70, 40); f.classList.add("relief"); });
     }
   } else if (type === "azu") {
     d.style.background = `url(${FACADE.azulejo}) 0 0 / 136px auto repeat`;
     z.style.backgroundColor = "#d8d2c4"; z.style.borderTop = "0"; z.style.height = "5%";
-    fx(d, "door2", left - 10, 640, 0);
+    opening(fx(d, "door2", left - 10, 640, 0), true);
   } else if (type === "mal") {
     d.style.background = `url(${FACADE.malaga}) 0 0 / 92px auto repeat`;
     z.style.backgroundColor = "#e6dcc8"; z.style.borderTop = "4px solid #d2c6ad"; z.style.height = "12%";
     // puerta amarilla de arco (reemplaza la ventana de piedra)
     const pm = document.createElement("img");
     pm.className = "fx tile-win"; pm.src = "img/ventana-pm.webp"; pm.alt = "";
-    pm.style.left = (left + 10) + "px"; pm.style.setProperty("--h", 620); pm.style.setProperty("--b", 0); pm.style.aspectRatio = "300 / 513";
+    pm.style.aspectRatio = "300 / 513"; opening(pm, true);
     d.appendChild(pm);
   } else if (type === "ven") {
     const v = VENTANAS[(venN++ * 5) % VENTANAS.length];
@@ -173,8 +186,7 @@ for (let h = 0; h < edges.length - 1; h++) {
     z.style.backgroundColor = "rgba(0,0,0,.1)"; z.style.borderTop = "0"; z.style.height = "7%";
     const im = document.createElement("img");
     im.className = "fx tile-win"; im.src = v.src; im.alt = "";
-    im.style.left = (left - 30) + "px";
-    im.style.setProperty("--h", v.door ? 620 : 430); im.style.setProperty("--b", v.door ? 0 : 150); im.style.aspectRatio = v.w + " / " + v.h;
+    im.style.aspectRatio = v.w + " / " + v.h; opening(im, !!v.door);
     d.appendChild(im);
   } else {
     const c = PLASTER.ten[h % PLASTER.ten.length];

@@ -77,6 +77,15 @@ body {
 .house::before { content: ""; position: absolute; inset: 0; background-image: var(--brush); background-size: 360px 360px; pointer-events: none; }
 .house .fx { position: absolute; bottom: calc(var(--b) * var(--sc, .5) * 1px); height: calc(var(--h) * var(--sc, .5) * 1px); width: auto; max-width: none; box-shadow: 0 0 0 1px rgba(0,0,0,.05), 6px 8px 14px -6px rgba(0,0,0,.35); }
 .house .fx.tile-win { box-shadow: none; }
+/* puerta o ventana a la izquierda del cuadro: borde derecho a distancia fija del marco (como la placa, a la derecha) */
+.house .fx.lft { left: calc(var(--rel) * 1px - var(--size) * var(--fk, 1) / 2 - var(--size) * .2); transform: translateX(-100%); }
+.house .fx.door { bottom: 0; }
+@media (max-width: 720px) { /* celular: abertura más chica y pegada al marco para que no se corte en el borde */
+  .house .fx.lft { left: calc(var(--rel) * 1px - var(--size) * var(--fk, 1) / 2 - var(--size) * .06); }
+  .house .fx.door { --h: 430 !important; }
+  .house .fx.win { --h: 300 !important; }
+}
+.house .fx.win { bottom: calc(var(--cy, 150px) - var(--h) * var(--sc, .5) * .5px); } /* centrada a la altura del cuadro */
 .house .fx.relief { box-shadow: none; filter: drop-shadow(2px 3px 1px rgba(0,0,0,.28)); z-index: 1; }
 .house .zocalo { z-index: 0; }
 .house .roof {

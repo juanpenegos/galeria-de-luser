@@ -15,6 +15,7 @@ function sizes() {
   const h = viewport.clientHeight, w = viewport.clientWidth;
   const art = w < 720 ? Math.max(110, Math.min(150, h * 0.19, w * 0.36)) : Math.max(130, Math.min(250, h * 0.26, w * 0.46));
   world.style.setProperty("--size", art + "px");
+  world.style.setProperty("--cy", (h * 0.38 - art * 0.08) + "px"); // altura del centro del cuadro sobre el piso
   const sc = Math.max(0.3, Math.min(0.62, h * 0.30 / 400));
   walker.style.setProperty("--s", sc); world.style.setProperty("--s", sc);
   world.style.setProperty("--sc", sc);
