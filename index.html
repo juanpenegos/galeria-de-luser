@@ -50,7 +50,7 @@
       <section class="intro" id="intro">
         <span class="eyebrow">Canciones colgadas en la pared</span>
         <h1>Galería de (Lu)ser</h1>
-        <p>Camina con <span class="keys"><kbd>←</kbd><kbd>→</kbd></span> o <span class="keys"><kbd>A</kbd><kbd>D</kbd></span> y párate frente a un cuadro para escuchar su canción.</p>
+        <p><span class="only-keys">Camina con <span class="keys"><kbd>←</kbd><kbd>→</kbd></span> o <span class="keys"><kbd>A</kbd><kbd>D</kbd></span></span><span class="only-touch">Camina con los botones <span class="keys"><kbd>◀</kbd><kbd>▶</kbd></span> de abajo</span> y párate frente a un cuadro para escuchar su canción.</p>
         <div class="spwall">
           <button class="spbtn" id="spOpen" type="button">Iniciar sesión en Spotify</button>
           <span class="spshort">Así las canciones suenan completas.</span>
@@ -102,11 +102,13 @@
         <p class="sptitle" id="spTitle">¿Por qué iniciar sesión en Spotify?</p>
         <p class="sptext">Cada cuadro de esta calle es una canción, y suenan desde Spotify. Si tienes tu sesión de Spotify abierta en este navegador, cada canción suena <b>completa</b>, de principio a fin. Si no, Spotify solo deja escuchar <b>30 segundos</b>.</p>
         <ol class="spsteps">
-          <li>Toca <b>Ir a Spotify</b> e inicia sesión en la pestaña que se abre.</li>
-          <li>Vuelve a esta pestaña y toca <b>Ya inicié sesión</b>.</li>
+          <li>Toca <b>Ir a Spotify</b> e inicia sesión.</li>
+          <li>Spotify debería devolverte aquí solo. Si te deja en la página de Spotify, toca el botón <b>atrás</b> del navegador, o abre de nuevo el link de esta galería.</li>
+          <li>Si seguiste en esta página, toca <b>Ya inicié sesión</b>.</li>
         </ol>
+        <p class="sptext">Importante: la sesión tiene que iniciarse <b>en este mismo navegador</b>, no solo en la app de Spotify. En el iPhone, Safari a veces bloquea esto y las canciones suenan 30 segundos; prueba con Chrome.</p>
         <div class="sprow">
-          <a class="spbtn" id="spGo" href="https://accounts.spotify.com/login" target="_blank" rel="noopener">Ir a Spotify</a>
+          <a class="spbtn" id="spGo" href="https://accounts.spotify.com/login">Ir a Spotify</a>
           <button class="chip" id="spReload" type="button">Ya inicié sesión</button>
         </div>
         <p class="spnote" id="spNote" hidden></p>

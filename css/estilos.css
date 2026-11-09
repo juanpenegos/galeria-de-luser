@@ -521,3 +521,7 @@ kbd { font-family: var(--mono); font-size: .75rem; border: 1px solid var(--chip-
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }
 }
+
+/* instrucciones: teclado en computador, botones de pantalla en celular */
+.only-touch { display: none; }
+@media (pointer: coarse), (max-width: 720px) { .only-keys { display: none; } .only-touch { display: inline; } }

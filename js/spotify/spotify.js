@@ -198,6 +198,8 @@ function spConnectedUI() {
   spSyncPlaylist().catch(() => spStatus("No se pudo actualizar la playlist. Se muestran las canciones guardadas."));
 })();
 /* Con Client ID, el botón inicia el login con la app; sin él, abre el login normal de Spotify. */
+/* Sin app propia, "Ir a Spotify" abre el login normal en esta misma pestaña y pide volver a la galería (continue). */
+$("spGo").href = "https://accounts.spotify.com/login?continue=" + encodeURIComponent(SP_REDIRECT);
 $("spGo").addEventListener("click", (e) => { if (SPOTIFY_CLIENT_ID) { e.preventDefault(); spLogin(); } });
 const spModal = $("spmodal");
 document.body.appendChild(spModal); // fuera de la escena 3D para que se pueda tocar
